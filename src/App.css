@@ -2,21 +2,52 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.operator{
+  width: 500px;
+  margin: 50px auto;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #09d3ac;
+.preview {
+  max-width: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  position: relative;
+}
+
+.preview > .preview-img{
+  width: 100%
+}
+
+.date-card-container{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.date-card{
+  width: 210px;
+
+}
+.date-card-header{
+  display: flex;
+}
+.date-card-header > .date-card-header-item{
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  color: #fff;
+}
+.date-card-body{
+  display: flex;
+  flex-wrap: wrap;
+}
+.date-card-body > .date-item{
+  width: 30px;
+  height: 30px;
+  color: #fff;
 }
