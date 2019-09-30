@@ -87,9 +87,9 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <div className="operator">
-        <Upload {...uploadProps} ><Button><Icon type="upload"/ >Click To Upload</Button></Upload>
+        <Upload {...uploadProps} ><Button><Icon type="upload"/ >选择图片</Button></Upload>
         <MonthPicker onChange={handleMonthChange} locale={locale} defaultValue={moment()} />
-        <Button type="primary" onClick={handleButtonClick}>生成</Button>
+        <Button type="primary" onClick={handleButtonClick} disabled={!state.imgSrc}>生成</Button>
       </div>
         <div className='preview max_width' id="preview-container" style={previewContainerStyle} ref={previewEl} >
           {state.imgSrc
