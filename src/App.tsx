@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import { Button, Upload, Icon, DatePicker } from 'antd'
+import { Button, Upload, Icon, DatePicker, Select } from 'antd'
 import { UploadProps, UploadFile, RcFile } from 'antd/lib/upload/interface'
 import moment from 'moment'
 import html2canvas from 'html2canvas'
@@ -9,11 +9,13 @@ import domtoimage from 'dom-to-image'
 
 import DateCard from './components/date-card'
 import { getBase64, getImageSize, canvasToImg } from './utils'
+import { DIRECTION_MAP, dateCardStyle } from './constants'
 import './App.css';
 
 
 moment.locale('zh-cn')
 const { MonthPicker } = DatePicker
+const { Option } = Select
 
 interface IState  {
   imgSrc?: string
@@ -21,6 +23,7 @@ interface IState  {
   previewWidth?: number
   previewHeight?: number
   selectDate: Date
+  direction: string
 }
 
 const App: React.FC = () => {
@@ -30,6 +33,7 @@ const App: React.FC = () => {
     previewWidth: 0,
     previewHeight: 0,
     selectDate: new Date(),
+    direction: 'rt',
   }
   const [state, setSate] = useState(initState)
   const previewEl = useRef(null)
@@ -84,18 +88,27 @@ const App: React.FC = () => {
 
   }
 
+  const handleSelectChange = (value:string) => {
+    setSate({...state, direction: value})
+  }
+
   return (
     <div className="App">
       <div className="operator">
         <Upload {...uploadProps} ><Button><Icon type="upload"/ >选择图片</Button></Upload>
         <MonthPicker onChange={handleMonthChange} locale={locale} defaultValue={moment()} />
+        <Select defaultValue={DIRECTION_MAP.rt} onChange={handleSelectChange}>
+          {Object.keys(DIRECTION_MAP).map(dir => {
+            return (<Option value={dir} key={dir}>{DIRECTION_MAP[dir]}</Option>)
+          })}
+        </Select>
         <Button type="primary" onClick={handleButtonClick} disabled={!state.imgSrc}>生成</Button>
       </div>
         <div className='preview max_width' id="preview-container" style={previewContainerStyle} ref={previewEl} >
           {state.imgSrc
           && 
           <img src={state.imgSrc} alt="preview" className='preview-img' />}
-          <div className="date-card-container">
+          <div className="date-card-container" style={dateCardStyle[state.direction]}>
             {
               state.imgSrc
               &&
