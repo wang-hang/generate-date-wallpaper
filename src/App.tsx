@@ -1,12 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import { Button, Upload, Icon, DatePicker } from 'antd'
 import { UploadProps, UploadFile, RcFile } from 'antd/lib/upload/interface'
 import moment from 'moment'
+import html2canvas from 'html2canvas'
 import 'moment/locale/zh-cn'
 import locale from 'antd/es/date-picker/locale/zh_CN'
+import domtoimage from 'dom-to-image'
 
 import DateCard from './components/date-card'
-import { getBase64, getImageSize } from './utils'
+import { getBase64, getImageSize, canvasToImg } from './utils'
 import './App.css';
 
 
@@ -30,6 +32,7 @@ const App: React.FC = () => {
     selectDate: new Date(),
   }
   const [state, setSate] = useState(initState)
+  const previewEl = useRef(null)
 
   const uploadProps: UploadProps = {
     name: 'img',
@@ -52,25 +55,55 @@ const App: React.FC = () => {
     }
   }
 
+  const handleButtonClick = () => {
+    //@ts-ignore
+    const dom = document.querySelector('#preview-container').cloneNode(true)
+    const hidenContainer = document.querySelector('.hiden-container')
+    const newId = `${+Date.now()}`
+    //@ts-ignore
+    dom.setAttribute('id', newId)
+    //@ts-ignore
+    hidenContainer.appendChild(dom)
+    const newDom = document.getElementById(newId)
+    //@ts-ignore
+    newDom.style.transform = `scale(${state.previewWidth / 800})`
+
+    //@ts-ignore
+    html2canvas(newDom).then((canvas: HTMLCanvasElement) => {
+      const link = document.createElement('a')
+      link.download = 'a.jpeg'
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.7)
+      link.href = dataUrl
+      link.click()
+      //@ts-ignore
+      hidenContainer.removeChild(newDom)
+    })
+    .catch((err: any) => {
+      console.log(err)
+    })
+
+  }
+
   return (
     <div className="App">
       <div className="operator">
         <Upload {...uploadProps} ><Button><Icon type="upload"/ >Click To Upload</Button></Upload>
         <MonthPicker onChange={handleMonthChange} locale={locale}  />
-        <Button type="primary">生成</Button>
+        <Button type="primary" onClick={handleButtonClick}>生成</Button>
       </div>
-      <div className='preview' style={previewContainerStyle} >
-        {state.imgSrc
-        && 
-        <img src={state.imgSrc} alt="preview" className='preview-img' />}
-        <div className="date-card-container">
-          {
-            state.imgSrc
-            &&
-            <DateCard date={state.selectDate} />
-          }          
+        <div className='preview max_width' id="preview-container" style={previewContainerStyle} ref={previewEl} >
+          {state.imgSrc
+          && 
+          <img src={state.imgSrc} alt="preview" className='preview-img' />}
+          <div className="date-card-container">
+            {
+              state.imgSrc
+              &&
+              <DateCard date={state.selectDate} />
+            }          
+          </div>
         </div>
-      </div>
+        <div className="hiden-container"></div> {/* 用于隐藏d插入的om */}
     </div>
   );
 }

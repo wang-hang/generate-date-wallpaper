@@ -10,13 +10,24 @@
   align-items: center;
 }
 
+.hiden-container{
+  height: 0px;
+  overflow: hidden;
+}
+
 .preview {
-  max-width: 800px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
   position: relative;
+}
+.max_width{
+  max-width: 800px;
+}
+.hidden{
+  position: fixed;
+  z-index: -9999;
 }
 
 .preview > .preview-img{
@@ -25,29 +36,29 @@
 
 .date-card-container{
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 50px;
+  left: 50px;
 }
 .date-card{
   width: 210px;
-
 }
 .date-card-header{
   display: flex;
+  width: 100%;
 }
 .date-card-header > .date-card-header-item{
-  width: 30px;
-  height: 30px;
+  width: calc(100% / 7);
   text-align: center;
-  line-height: 30px;
   color: #fff;
 }
 .date-card-body{
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
 }
 .date-card-body > .date-item{
   width: 30px;
   height: 30px;
   color: #fff;
+  text-align: center;
 }

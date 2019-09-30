@@ -65,3 +65,8 @@ export const fillDateList = (date: Date): dateListType => {
   }
   return dateList
 }
+
+
+export const canvasToImg = (canvas: HTMLCanvasElement) => {
+
+}
