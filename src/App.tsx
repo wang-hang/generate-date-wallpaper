@@ -19,8 +19,8 @@ const { Option } = Select
 interface IState  {
   imgSrc?: string
   file?: UploadFile
-  previewWidth?: number
-  previewHeight?: number
+  previewWidth: number
+  previewHeight: number
   selectDate: Date
   direction: string
 }
@@ -59,26 +59,21 @@ const App: React.FC = () => {
   }
 
   const handleButtonClick = () => {
-    //@ts-ignore
-    const dom = document.querySelector('#preview-container').cloneNode(true)
-    const hidenContainer = document.querySelector('.hiden-container')
+    const previewDom = document.querySelector('#preview-container') as HTMLElement
+    const dom = previewDom.cloneNode(true)
+    const hidenContainer = document.querySelector('.hiden-container') as HTMLElement
     const newId = `${+Date.now()}`
     //@ts-ignore
     dom.setAttribute('id', newId)
-    //@ts-ignore
     hidenContainer.appendChild(dom)
-    const newDom = document.getElementById(newId)
-    //@ts-ignore
+    const newDom = document.getElementById(newId) as HTMLElement
     newDom.style.transform = `scale(${state.previewWidth / 800})`
-
-    //@ts-ignore
     html2canvas(newDom).then((canvas: HTMLCanvasElement) => {
       const link = document.createElement('a')
       link.download = 'a.jpeg'
       const dataUrl = canvas.toDataURL('image/jpeg', 0.7)
       link.href = dataUrl
       link.click()
-      //@ts-ignore
       hidenContainer.removeChild(newDom)
     })
     .catch((err: any) => {
