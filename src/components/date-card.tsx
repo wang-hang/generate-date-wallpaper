@@ -26,8 +26,12 @@ const DateCard = (props: IProps) => {
     <div className="date-card">
       <div className="date-card-header">
         {
-          WEEKS_MAP.map(it => {
-            return (<div className='date-card-header-item' key={it}>{it}</div>)
+          WEEKS_MAP.map((it, index) => {
+            let cls = ['date-card-header-item']
+            if(index === 0 || index === 6){ // 周六日
+              cls.push('is-holiday')
+            }
+            return (<div className={cls.join(' ')} key={it}>{it}</div>)
           })
         }
       </div>

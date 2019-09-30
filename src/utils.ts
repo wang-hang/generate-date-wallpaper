@@ -67,6 +67,11 @@ export const fillDateList = (date: Date): dateListType => {
 }
 
 
-export const canvasToImg = (canvas: HTMLCanvasElement) => {
-
+/**
+ * @param {Date} date // 日期对象
+ * @description 判断日期是否是工作日
+ */
+export const isWorkDay = (date: Date) => {
+  const day = date.getDay()
+  return !(day === 0 || day === 6)
 }

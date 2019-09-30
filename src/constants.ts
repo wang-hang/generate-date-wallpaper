@@ -27,7 +27,7 @@ export const dateCardStyle: dateCardStyleType = {
     left: '40px',
   },
   'rb': {
-    bottom: '40px',
-    right: '40px',
+    bottom: '50px',
+    right: '50px',
   },
 }

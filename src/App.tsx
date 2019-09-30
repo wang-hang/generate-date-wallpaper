@@ -5,10 +5,9 @@ import moment from 'moment'
 import html2canvas from 'html2canvas'
 import 'moment/locale/zh-cn'
 import locale from 'antd/es/date-picker/locale/zh_CN'
-import domtoimage from 'dom-to-image'
 
 import DateCard from './components/date-card'
-import { getBase64, getImageSize, canvasToImg } from './utils'
+import { getBase64, getImageSize } from './utils'
 import { DIRECTION_MAP, dateCardStyle } from './constants'
 import './App.css';
 
