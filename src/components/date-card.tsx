@@ -13,9 +13,9 @@ type dateListType = Array<Date|null>
 const DateCard = (props: IProps) => {
 
   const renderDateList = (dateList: dateListType) => {
-    return dateList.map(date => {
+    return dateList.map((date, index) => {
       if(date === null) {
-        return (<div className="date-item empty"></div> )
+        return (<div className="date-item empty" key={index}></div> )
       }else{
         return <DateItem date={date} className='date-item' key={date.toString()} />
       }
